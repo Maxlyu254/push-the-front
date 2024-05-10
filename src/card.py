@@ -26,15 +26,24 @@ DENGB2_5 = ImageFont.truetype(DENGB_PATH, size=2.5*UNIT)
 DENGB3 = ImageFont.truetype(DENGB_PATH, size=3*UNIT)
 SEGUISYM10 = ImageFont.truetype(SEGUISYM_PATH, size=10*UNIT)
 
+BKGDBOX = (UNIT, UNIT, 19*UNIT, 28*UNIT)
+DESCBOX = (UNIT, 18*UNIT, 19*UNIT, 27*UNIT)
+COSTBOX = (UNIT, UNIT, 5*UNIT, 5*UNIT)
+ATKBOX = (UNIT, 23.8*UNIT, 5*UNIT, 27.8*UNIT)
+DEFBOX = (15*UNIT, 23.8*UNIT, 19*UNIT, 27.8*UNIT)
+NAMEBOX = (0, 26.7*UNIT, 20*UNIT, 29*UNIT)
+ICONBOX = (5*UNIT, 5*UNIT, 15*UNIT, 15*UNIT)
+DESCTEXTBOX = (1.5*UNIT, 18.5*UNIT, 18.5*UNIT, 25*UNIT)
+
 def draw_unit_card(name, stats, suit, desc):
   img = Image.new(mode="RGB", size=(20*UNIT, 30*UNIT), color="white")
   draw = ImageDraw.Draw(img)
 
   # card background color
-  draw.rounded_rectangle((UNIT, UNIT, 19*UNIT, 28*UNIT), fill="#FBE3D6", radius=UNIT)
+  draw.rounded_rectangle(BKGDBOX, fill="#FBE3D6", radius=0.5*UNIT)
 
   # card description panel
-  draw.rectangle((UNIT, 18*UNIT, 19*UNIT, 27*UNIT), fill="#C9B6AB")
+  draw.rectangle(DESCBOX, fill="#C9B6AB")
 
   # name banner
   draw.arc((-20*UNIT, -11*UNIT, 40*UNIT, 29.2*UNIT), start=75, end=105, width=3*UNIT, fill="#E4E4E4")
@@ -42,28 +51,28 @@ def draw_unit_card(name, stats, suit, desc):
   draw.rectangle((17.25*UNIT, 25.6*UNIT, 20*UNIT, 28.6*UNIT), fill="#E4E4E4")
 
   # cost icon
-  draw.rounded_rectangle((0.5*UNIT, 0.5*UNIT, 5*UNIT, 5*UNIT), fill="#FCE53A", radius=UNIT)
+  draw.rounded_rectangle(COSTBOX, fill="#FCE53A", radius=0.5*UNIT)
 
   # atk icon
-  draw.rounded_rectangle((0.5*UNIT, 25*UNIT, 5*UNIT, 29.5*UNIT), fill="#E97132", radius=UNIT)
+  draw.rounded_rectangle(ATKBOX, fill="#E97132", radius=0.5*UNIT)
 
   # def icon
-  draw.rounded_rectangle((15*UNIT, 25*UNIT, 19.5*UNIT, 29.5*UNIT), fill="#156082", radius=UNIT)
+  draw.rounded_rectangle(DEFBOX, fill="#156082", radius=0.5*UNIT)
 
   # draw stats
-  draw_centered_text(draw, (0.5*UNIT, 0.5*UNIT, 5*UNIT, 5*UNIT), text=str(stats[0]), font=ARIALB3)
-  draw_centered_die(draw, (0.5*UNIT, 25*UNIT, 5*UNIT, 29.5*UNIT), die_num=stats[1], font_size=5*UNIT)
-  draw_centered_die(draw, (15*UNIT, 25*UNIT, 19.5*UNIT, 29.5*UNIT), die_num=stats[2], font_size=5*UNIT)
+  draw_centered_text(draw, COSTBOX, text=str(stats[0]), font=ARIALB3)
+  draw_centered_die(draw, ATKBOX, die_num=stats[1], font_size=5*UNIT)
+  draw_centered_die(draw, DEFBOX, die_num=stats[2], font_size=5*UNIT)
 
   # draw card name
-  draw_centered_text(draw, (0, 26.7*UNIT, 20*UNIT, 29*UNIT), text=name, font=DENGB1_8, fill="black")
+  draw_centered_text(draw, NAMEBOX, text=name, font=DENGB1_8, fill="black")
 
   # draw card icon
   card_icon = SUIT_DICT[suit] if suit in SUIT_DICT else suit
-  draw_centered_text(draw, (5*UNIT, 5*UNIT, 15*UNIT, 15*UNIT), text=card_icon, font=SEGUISYM10, fill="black")
+  draw_centered_text(draw, ICONBOX, text=card_icon, font=SEGUISYM10, fill="black")
 
   # draw card description
-  draw_centered_multiline_text(draw, (1.5*UNIT, 18.5*UNIT, 18.5*UNIT, 25*UNIT), text=desc, font=DENGB1_2, fill="black")
+  draw_centered_multiline_text(draw, DESCTEXTBOX, text=desc, font=DENGB1_2, fill="black")
 
   img.show()
   return img
@@ -83,14 +92,14 @@ def draw_centered_multiline_text(draw, xy, text, font, fill="white"):
   x_offset = b_width // 2
   y_offset = b_height // 2
   multilined_text = make_text_multiline(draw, text, font, b_width)
-  draw.text((xy[0] + x_offset, xy[1] + y_offset), multilined_text, anchor="mm", font=font, align="center", fill=fill)
+  draw.text((xy[0] + x_offset, xy[1] + y_offset), multilined_text, anchor="mm", font=font, align="center", spacing=0.5*UNIT, fill=fill)
 
 
 def draw_centered_die(draw, xy, die_num, font_size, fill='white'):
   die_font = ImageFont.truetype(SEGUISYM_PATH, size=font_size)
   assert 0 <= die_num < 1000
   if 1 <= die_num <= 6:
-    die_xy = [xy[0], xy[1] - font_size * 0.05, xy[2], xy[3] - font_size * 0.05]
+    die_xy = [xy[0], xy[1] - font_size * 0.07, xy[2], xy[3] - font_size * 0.07]
     draw_centered_text(draw, die_xy, text=DIE_DICT[die_num], font=die_font, fill=fill)
   else:
     # First, draw a box that resembles the outline of a die
@@ -125,5 +134,5 @@ def make_text_multiline(draw, text, font, width):
   return str.join("\n", lines)
 
 if __name__ == "__main__":
-  img = draw_unit_card("一个长名字", [1, 1, 100], "spade", "这是一个非常长的描述，该描述的目的是为了测试文本分行是否在正常工作。同时，为了保证我们能在同一个文本里写下粗体和非粗体的文本，我们会要用pillow写一个脚本，或者尝试换一个图像库完成这件事。")
+  img = draw_unit_card("一个长名字", [1, 1, 100], "spade", "文本分行正常工作，但是过于长的文本会遮挡住攻击和防御数字，所以还是不能太长")
   img.save("../img_out/test.jpg", "JPEG")
