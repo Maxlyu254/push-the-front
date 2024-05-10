@@ -72,7 +72,7 @@ def draw_unit_card(name, stats, suit, desc):
   draw_centered_text(draw, ICONBOX, text=card_icon, font=SEGUISYM10, fill="black")
 
   # draw card description
-  draw_centered_multiline_text(draw, DESCTEXTBOX, text=desc, font=DENGB1_2, fill="black")
+  draw_centered_multiline_text(draw, DESCTEXTBOX, text=desc, font=DENGB1_2, fill="white")
 
   img.show()
   return img
