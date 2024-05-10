@@ -70,6 +70,7 @@ def draw_centered_die(draw, xy, die_num, font, fill='white'):
   if 1 <= die_num <= 6:
     draw_centered_text(draw, xy, text=DIE_DICT[die_num], font=font, fill=fill)
   else:
+    # THIS DOES NOT WORK
     bbox = draw.textbbox((xy[0], xy[1]), "⚂", font=font)
     outline_width = int((bbox[2] - bbox[0]) / 6)
     draw.rectangle(bbox, outline=fill, width=outline_width)
