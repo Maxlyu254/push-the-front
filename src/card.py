@@ -74,7 +74,6 @@ def draw_unit_card(name, stats, suit, desc):
   # draw card description
   draw_centered_multiline_text(draw, DESCTEXTBOX, text=desc, font=DENGB1_2, fill="white")
 
-  img.show()
   return img
 
 

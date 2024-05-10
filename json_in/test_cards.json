@@ -1,0 +1,28 @@
+{
+  "militia": {
+    "type": "unit", 
+    "name": "民兵", 
+    "cost": 1, 
+    "atk": 1, 
+    "def": 2, 
+    "suit": "club", 
+    "desc": "勇敢"
+  }, 
+
+  "thief": {
+    "type": "unit", 
+    "name": "盗贼", 
+    "cost": 1, 
+    "atk": 2, 
+    "def": 1, 
+    "suit": "spade"
+  }, 
+  
+  "minimal": {
+    "type": "unit", 
+    "name": "简化测试", 
+    "cost": 1, 
+    "atk": 2, 
+    "def": 1
+  }
+}
