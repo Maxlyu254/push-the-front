@@ -21,8 +21,8 @@
   "minimal": {
     "type": "unit", 
     "name": "简化测试", 
-    "cost": 1, 
-    "atk": 2, 
-    "def": 1
+    "cost": 5, 
+    "atk": 5, 
+    "def": 5
   }
 }
