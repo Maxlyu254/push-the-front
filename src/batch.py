@@ -3,8 +3,8 @@ import os
 import codecs
 from card import draw_unit_card
 
-IN_PATH = "../json_in/"
-OUT_PATH = "../img_out/"
+IN_PATH = "./json_in/"
+OUT_PATH = "./img_out/"
 
 NAME="Name"
 TYPE="Type"
