@@ -9,6 +9,7 @@ CONSOLA_PATH = "./fonts/CONSOLA.TTF"
 ARIALB_PATH = "./fonts/ARIALBD.TTF"
 SIMHEI_PATH = "./fonts/simhei.ttf"
 SEGOEUI_PATH = "./fonts/SEGOEUI.TTF"
+SEGOEUI_SYMB_PATH = "./fonts/seguisym.ttf"
 SYMBOL_PATH = "./fonts/SYMBOL.TTF"
 DENGB_PATH = "./fonts/DENGB.TTF"
 
@@ -20,6 +21,7 @@ CONSOLA5 = ImageFont.truetype(CONSOLA_PATH, size=5*UNIT)
 TIMES5 = ImageFont.truetype(CONSOLA_PATH, size=5*UNIT)
 SIMHEI5 = ImageFont.truetype(SIMHEI_PATH, size=5*UNIT)
 SEGOEUI5 = ImageFont.truetype(SEGOEUI_PATH, size=5*UNIT)
+SEGOEUISYM = ImageFont.truetype(SEGOEUI_SYMB_PATH, size=5*UNIT)
 SYMBOL5 = ImageFont.truetype(SYMBOL_PATH, size=5*UNIT)
 DENGB5 = ImageFont.truetype(DENGB_PATH, size=5*UNIT)
 
@@ -49,7 +51,7 @@ def draw_unit_card(name, stats, desc):
 
   # draw stats
   draw_centered_text(draw, (0.5*UNIT, 0.5*UNIT, 5*UNIT, 5*UNIT), text="1", font=ARIALB3)
-  draw_centered_die(draw, (0.5*UNIT, 25*UNIT, 5*UNIT, 29.5*UNIT), die_num=6, font=DENGB5)
+  draw_centered_die(draw, (0.5*UNIT, 25*UNIT, 5*UNIT, 29.5*UNIT), die_num=6, font=SEGOEUISYM)
 
   img.show()
 
