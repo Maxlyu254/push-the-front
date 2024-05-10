@@ -43,7 +43,7 @@ def draw_cards_from_json(path):
         assert DEF in card
         img = draw_unit_card(
           card[NAME], 
-          (card[COST], card[ATK], card[DEF]), 
+          (int(card[COST]), int(card[ATK]), int(card[DEF])), 
           card[SUIT] if SUIT in card else " ", 
           card[DESC] if DESC in card else ""
         )
