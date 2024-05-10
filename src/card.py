@@ -2,17 +2,18 @@ from PIL import Image, ImageFont, ImageDraw
 
 UNIT = 36
 DIE_DICT = {1: "⚀", 2: "⚁", 3: "⚂", 4: "⚃", 5: "⚄", 6: "⚅"}
-SUIT_DICT = {"spade": "♠", "heart": "♥", "diamond": "♦", "club": "♣", "spade0": "♤", "heart0": "♡", "diamond0": "♢", "empty_club": "♧"}
+# SUIT_DICT = {"spade": "♠", "heart": "♥", "diamond": "♦", "club": "♣", "spade0": "♤", "heart0": "♡", "diamond0": "♢", "empty_club": "♧"}
+SUIT_DICT = {"黑桃": "♠", "红桃": "♥", "方片": "♦", "梅花": "♣", "spade0": "♤", "heart0": "♡", "diamond0": "♢", "empty_club": "♧"}
 
-ARIAL_PATH = "../fonts/ARIAL.TTF"
-TIMES_PATH = "../fonts/TIMES.TTF"
-CONSOLA_PATH = "../fonts/CONSOLA.TTF"
-ARIALB_PATH = "../fonts/ARIALBD.TTF"
-SIMHEI_PATH = "../fonts/simhei.ttf"
-SEGOEUI_PATH = "../fonts/SEGOEUI.TTF"
-SEGUISYM_PATH = "../fonts/SEGUISYM.TTF"
-SYMBOL_PATH = "../fonts/SYMBOL.TTF"
-DENGB_PATH = "../fonts/DENGB.TTF"
+ARIAL_PATH = "./fonts/ARIAL.TTF"
+TIMES_PATH = "./fonts/TIMES.TTF"
+CONSOLA_PATH = "./fonts/CONSOLA.TTF"
+ARIALB_PATH = "./fonts/ARIALBD.TTF"
+SIMHEI_PATH = "./fonts/simhei.ttf"
+SEGOEUI_PATH = "./fonts/SEGOEUI.TTF"
+SEGUISYM_PATH = "./fonts/SEGUISYM.TTF"
+SYMBOL_PATH = "./fonts/SYMBOL.TTF"
+DENGB_PATH = "./fonts/DENGB.TTF"
 
 ARIALB1 = ImageFont.truetype(ARIALB_PATH, size=UNIT)
 ARIALB2 = ImageFont.truetype(ARIALB_PATH, size=2*UNIT)
