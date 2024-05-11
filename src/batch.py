@@ -1,21 +1,26 @@
 import json
 import os
 import codecs
-from card import draw_unit_card
+from PIL import Image
+from card import draw_unit_card, ULEN
 
 IN_PATH = "./json_in/"
 OUT_PATH = "./img_out/"
 
-NAME="Name"
-TYPE="Type"
-COST="Cost"
-ATK="Atk"
-DEF="Def"
-SUIT="Suit"
-DESC="Desc"
+NAME="name"
+TYPE="type"
+COST="cost"
+ATK="atk"
+DEF="def"
+SUIT="suit"
+DESC="desc"
 
-UNIT="单位"
-COMMAND="指令"
+UNIT_TYPES = {"单位", "unit"}
+COMMANDS = {"指令", "command"}
+
+DECK_ROW_NUM = 7
+DECK_COL_NUM = 10
+DECK_SIZE = 69
 
 def draw_cards_from_json(path):
   """
@@ -31,11 +36,15 @@ def draw_cards_from_json(path):
   with codecs.open(path, encoding="utf-8") as file:
     data = json.load(file)
     for id, card in enumerate(data): 
-      # card = data[id]
+      card_count += 1
+
+      # set all card ids to lower case
+      card = { str.lower(key) : card[key] for key in card.keys() }
+
       assert TYPE in card
       type = card[TYPE]
 
-      if type == UNIT:
+      if type in UNIT_TYPES:
         # if the card is a unit
         assert NAME in card
         assert COST in card
@@ -48,7 +57,6 @@ def draw_cards_from_json(path):
           card[DESC] if DESC in card else ""
         )
         img.save(os.path.join(OUT_PATH, file_name + "/", card[NAME] + ".png"), "PNG")
-        card_count += 1
 
       else:
         # if the card is unkown type
@@ -58,3 +66,61 @@ def draw_cards_from_json(path):
     # all cards processed successfully
     print(f"All cards processed successfully, saved {card_count} cards to directory {os.path.join(OUT_PATH, file_name)}")
     return card_count
+
+
+def draw_tts_deck_from_json(path):
+  """
+  Draw an image that can be exported into tts as a custom deck. The deck will contain 
+  all cards defined in the designated json file. 
+  """
+  file_name = os.path.basename(path).split('/')[-1].rsplit('.', 1)[0]
+  out_dir_path = os.path.join(OUT_PATH, file_name)
+  if not os.path.isdir(out_dir_path):
+    os.makedirs(os.path.join(OUT_PATH, file_name), exist_ok=True)
+  
+  # Make an array to story all deck images. The image should contain 7 * 10 sections. Each section contains
+  # one card, and the last section is the hidden face.
+  deck_imgs: list[Image.Image] = []
+
+  # create each card image
+  card_count = 0
+  with codecs.open(path, encoding="utf-8") as file:
+    data = json.load(file)
+    for id, card in enumerate(data): 
+      card_count += 1
+
+      # set all card ids to lower case
+      card = { str.lower(key) : card[key] for key in card.keys() }
+
+      # create a new deck image if the current deck images are not enough to hold all cards
+      if card_count > len(deck_imgs) * DECK_SIZE:
+        deck_imgs.append(Image.new(mode="RGB", size=(20*ULEN*DECK_COL_NUM, 30*ULEN*DECK_ROW_NUM), color="white"))
+
+      assert TYPE in card
+      type = card[TYPE]
+
+      if type in UNIT_TYPES: 
+        # if the card is a unit
+        assert NAME in card
+        assert COST in card
+        assert ATK in card
+        assert DEF in card
+        img = draw_unit_card(
+          card[NAME], 
+          (int(card[COST]), int(card[ATK]), int(card[DEF])), 
+          card[SUIT] if SUIT in card else " ", 
+          card[DESC] if DESC in card else ""
+        )
+        deck_imgs[id // DECK_SIZE].paste(img, ((id % DECK_COL_NUM) * 20 * ULEN, (id // DECK_COL_NUM) * 30 * ULEN))
+
+      else:
+        # if the card is unkown type
+        print(f"Card {card_count} type unkown, batch process aborted.")
+        return card_count
+
+    # all cards processed successfully
+    for i, img in enumerate(deck_imgs):
+      img.save(os.path.join(OUT_PATH, file_name + "/", f"{file_name}({i}).png"), "PNG")
+    print(f"All cards processed successfully, saved {card_count} cards to directory {os.path.join(OUT_PATH, file_name)}, in {i + 1} deck images.")
+    return card_count
+  

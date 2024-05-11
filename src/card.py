@@ -1,6 +1,6 @@
 from PIL import Image, ImageFont, ImageDraw
 
-UNIT = 36
+ULEN = 36 # Unit length
 DIE_DICT = {1: "⚀", 2: "⚁", 3: "⚂", 4: "⚃", 5: "⚄", 6: "⚅"}
 SUIT_DICT = {
   "黑桃": "♠", "红桃": "♥", "方片": "♦", "梅花": "♣", 
@@ -18,55 +18,55 @@ SEGUISYM_PATH = "./fonts/SEGUISYM.TTF"
 SYMBOL_PATH = "./fonts/SYMBOL.TTF"
 DENGB_PATH = "./fonts/DENGB.TTF"
 
-ARIALB1 = ImageFont.truetype(ARIALB_PATH, size=UNIT)
-ARIALB2 = ImageFont.truetype(ARIALB_PATH, size=2*UNIT)
-ARIALB3 = ImageFont.truetype(ARIALB_PATH, size=3*UNIT)
-DENGB1 = ImageFont.truetype(DENGB_PATH, size=UNIT)
-DENGB1_2 = ImageFont.truetype(DENGB_PATH, size=1.2*UNIT)
-DENGB1_5 = ImageFont.truetype(DENGB_PATH, size=1.5*UNIT)
-DENGB1_8 = ImageFont.truetype(DENGB_PATH, size=1.8*UNIT)
-DENGB2 = ImageFont.truetype(DENGB_PATH, size=2*UNIT)
-DENGB2_5 = ImageFont.truetype(DENGB_PATH, size=2.5*UNIT)
-DENGB3 = ImageFont.truetype(DENGB_PATH, size=3*UNIT)
-SEGUISYM10 = ImageFont.truetype(SEGUISYM_PATH, size=10*UNIT)
+ARIALB1 = ImageFont.truetype(ARIALB_PATH, size=ULEN)
+ARIALB2 = ImageFont.truetype(ARIALB_PATH, size=2*ULEN)
+ARIALB3 = ImageFont.truetype(ARIALB_PATH, size=3*ULEN)
+DENGB1 = ImageFont.truetype(DENGB_PATH, size=ULEN)
+DENGB1_2 = ImageFont.truetype(DENGB_PATH, size=1.2*ULEN)
+DENGB1_5 = ImageFont.truetype(DENGB_PATH, size=1.5*ULEN)
+DENGB1_8 = ImageFont.truetype(DENGB_PATH, size=1.8*ULEN)
+DENGB2 = ImageFont.truetype(DENGB_PATH, size=2*ULEN)
+DENGB2_5 = ImageFont.truetype(DENGB_PATH, size=2.5*ULEN)
+DENGB3 = ImageFont.truetype(DENGB_PATH, size=3*ULEN)
+SEGUISYM10 = ImageFont.truetype(SEGUISYM_PATH, size=10*ULEN)
 
-BKGDBOX = (UNIT, UNIT, 19*UNIT, 28*UNIT)
-DESCBOX = (UNIT, 18*UNIT, 19*UNIT, 27*UNIT)
-COSTBOX = (UNIT, UNIT, 5*UNIT, 5*UNIT)
-ATKBOX = (UNIT, 23.8*UNIT, 5*UNIT, 27.8*UNIT)
-DEFBOX = (15*UNIT, 23.8*UNIT, 19*UNIT, 27.8*UNIT)
-NAMEBOX = (0, 26.7*UNIT, 20*UNIT, 29*UNIT)
-ICONBOX = (5*UNIT, 5*UNIT, 15*UNIT, 15*UNIT)
-DESCTEXTBOX = (1.5*UNIT, 18.5*UNIT, 18.5*UNIT, 25*UNIT)
+BKGDBOX = (ULEN, ULEN, 19*ULEN, 28*ULEN)
+DESCBOX = (ULEN, 18*ULEN, 19*ULEN, 27*ULEN)
+COSTBOX = (ULEN, ULEN, 5*ULEN, 5*ULEN)
+ATKBOX = (ULEN, 23.8*ULEN, 5*ULEN, 27.8*ULEN)
+DEFBOX = (15*ULEN, 23.8*ULEN, 19*ULEN, 27.8*ULEN)
+NAMEBOX = (0, 26.7*ULEN, 20*ULEN, 29*ULEN)
+ICONBOX = (5*ULEN, 5*ULEN, 15*ULEN, 15*ULEN)
+DESCTEXTBOX = (1.5*ULEN, 18.5*ULEN, 18.5*ULEN, 25*ULEN)
 
 def draw_unit_card(name, stats, suit, desc):
-  img = Image.new(mode="RGB", size=(20*UNIT, 30*UNIT), color="white")
+  img = Image.new(mode="RGB", size=(20*ULEN, 30*ULEN), color="white")
   draw = ImageDraw.Draw(img)
 
   # card background color
-  draw.rounded_rectangle(BKGDBOX, fill="#FBE3D6", radius=0.5*UNIT)
+  draw.rounded_rectangle(BKGDBOX, fill="#FBE3D6", radius=0.5*ULEN)
 
   # card description panel
   draw.rectangle(DESCBOX, fill="#C9B6AB")
 
   # name banner
-  draw.arc((-20*UNIT, -11*UNIT, 40*UNIT, 29.2*UNIT), start=75, end=105, width=3*UNIT, fill="#E4E4E4")
-  draw.rectangle((0, 25.6*UNIT, 2.75*UNIT, 28.6*UNIT), fill="#E4E4E4")
-  draw.rectangle((17.25*UNIT, 25.6*UNIT, 20*UNIT, 28.6*UNIT), fill="#E4E4E4")
+  draw.arc((-20*ULEN, -11*ULEN, 40*ULEN, 29.2*ULEN), start=75, end=105, width=3*ULEN, fill="#E4E4E4")
+  draw.rectangle((0, 25.6*ULEN, 2.75*ULEN, 28.6*ULEN), fill="#E4E4E4")
+  draw.rectangle((17.25*ULEN, 25.6*ULEN, 20*ULEN, 28.6*ULEN), fill="#E4E4E4")
 
   # cost icon
-  draw.rounded_rectangle(COSTBOX, fill="#FCE53A", radius=0.5*UNIT)
+  draw.rounded_rectangle(COSTBOX, fill="#FCE53A", radius=0.5*ULEN)
 
   # atk icon
-  draw.rounded_rectangle(ATKBOX, fill="#E97132", radius=0.5*UNIT)
+  draw.rounded_rectangle(ATKBOX, fill="#E97132", radius=0.5*ULEN)
 
   # def icon
-  draw.rounded_rectangle(DEFBOX, fill="#156082", radius=0.5*UNIT)
+  draw.rounded_rectangle(DEFBOX, fill="#156082", radius=0.5*ULEN)
 
   # draw stats
   draw_centered_text(draw, COSTBOX, text=str(stats[0]), font=ARIALB3)
-  draw_centered_die(draw, ATKBOX, die_num=stats[1], font_size=5*UNIT)
-  draw_centered_die(draw, DEFBOX, die_num=stats[2], font_size=5*UNIT)
+  draw_centered_die(draw, ATKBOX, die_num=stats[1], font_size=5*ULEN)
+  draw_centered_die(draw, DEFBOX, die_num=stats[2], font_size=5*ULEN)
 
   # draw card name
   draw_centered_text(draw, NAMEBOX, text=name, font=DENGB1_8, fill="black")
@@ -95,7 +95,7 @@ def draw_centered_multiline_text(draw, xy, text, font, fill="white"):
   x_offset = b_width // 2
   y_offset = b_height // 2
   multilined_text = make_text_multiline(draw, text, font, b_width)
-  draw.text((xy[0] + x_offset, xy[1] + y_offset), multilined_text, anchor="mm", font=font, align="center", spacing=0.5*UNIT, fill=fill)
+  draw.text((xy[0] + x_offset, xy[1] + y_offset), multilined_text, anchor="mm", font=font, align="center", spacing=0.5*ULEN, fill=fill)
 
 
 def draw_centered_die(draw, xy, die_num, font_size, fill='white'):
@@ -135,6 +135,7 @@ def make_text_multiline(draw, text, font, width):
     else: 
       end += 1
   return str.join("\n", lines)
+
 
 if __name__ == "__main__":
   img = draw_unit_card("一个长名字", [1, 1, 100], "spade", "文本分行正常工作，但是过于长的文本会遮挡住攻击和防御数字，所以还是不能太长")
