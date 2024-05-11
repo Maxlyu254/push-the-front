@@ -39,20 +39,36 @@ NAMEBOX = (0, 26.7*ULEN, 20*ULEN, 29*ULEN)
 ICONBOX = (5*ULEN, 5*ULEN, 15*ULEN, 15*ULEN)
 DESCTEXTBOX = (1.5*ULEN, 18.5*ULEN, 18.5*ULEN, 25*ULEN)
 
-def draw_unit_card(name, stats, suit, desc):
+BLACK_PALETTE = {"icon": "black", "banner": "black", "name": "white", "background": "#DDDDDD"}
+RED_PALETTE = {"icon": "#CC0000", "banner": "#CC0000", "name": "white", "background": "#FFDDDD"}
+
+BLACK_SUITS = {"spade0", "spade", "club0", "club", "黑桃", "梅花"}
+RED_SUITS = {"heart0", "heart", "diamond0", "diamond", "红桃", "方片"}
+
+def draw_unit_card(name, stats, suit, desc, palette=None):
   img = Image.new(mode="RGB", size=(20*ULEN, 30*ULEN), color="white")
-  draw = ImageDraw.Draw(img)
+  draw = ImageDraw.Draw(img, "RGBA")
+
+  # decide which palette to use
+  if palette == None and suit in BLACK_SUITS:
+    palette = BLACK_PALETTE
+  elif palette == None and suit in RED_SUITS:
+    palette = RED_PALETTE
+  else: 
+    palette = BLACK_PALETTE
+
 
   # card background color
-  draw.rounded_rectangle(BKGDBOX, fill="#FBE3D6", radius=0.5*ULEN)
+  draw.rounded_rectangle(BKGDBOX, fill=palette["background"], radius=0.5*ULEN)
 
   # card description panel
-  draw.rectangle(DESCBOX, fill="#C9B6AB")
+  draw.rectangle(DESCBOX, fill=(0, 0, 0, 200))
 
   # name banner
-  draw.arc((-20*ULEN, -11*ULEN, 40*ULEN, 29.2*ULEN), start=75, end=105, width=3*ULEN, fill="#E4E4E4")
-  draw.rectangle((0, 25.6*ULEN, 2.75*ULEN, 28.6*ULEN), fill="#E4E4E4")
-  draw.rectangle((17.25*ULEN, 25.6*ULEN, 20*ULEN, 28.6*ULEN), fill="#E4E4E4")
+  # draw_banner(draw, (0, 25.2*ULEN, 20*ULEN, 28.8*ULEN), palette["banner"], "#444444")
+  draw.arc((-20*ULEN, -11*ULEN, 40*ULEN, 29.2*ULEN), start=75, end=105, width=3*ULEN, fill=palette["banner"])
+  draw.rectangle((0, 25.6*ULEN, 2.75*ULEN, 28.6*ULEN), fill=palette["banner"])
+  draw.rectangle((17.25*ULEN, 25.6*ULEN, 20*ULEN, 28.6*ULEN), fill=palette["banner"])
 
   # cost icon
   draw.rounded_rectangle(COSTBOX, fill="#FCE53A", radius=0.5*ULEN)
@@ -69,11 +85,11 @@ def draw_unit_card(name, stats, suit, desc):
   draw_centered_die(draw, DEFBOX, die_num=stats[2], font_size=5*ULEN)
 
   # draw card name
-  draw_centered_text(draw, NAMEBOX, text=name, font=DENGB1_8, fill="black")
+  draw_centered_text(draw, NAMEBOX, text=name, font=DENGB1_8, fill=palette["name"])
 
   # draw card icon
   card_icon = SUIT_DICT[suit] if suit in SUIT_DICT else suit
-  draw_centered_text(draw, ICONBOX, text=card_icon, font=SEGUISYM10, fill="black")
+  draw_centered_text(draw, ICONBOX, text=card_icon, font=SEGUISYM10, fill=palette["icon"])
 
   # draw card description
   draw_centered_multiline_text(draw, DESCTEXTBOX, text=desc, font=DENGB1_2, fill="white")
@@ -119,6 +135,39 @@ def draw_centered_die(draw, xy, die_num, font_size, fill='white'):
       draw_centered_text(draw, die_box, str(die_num), num_font)
 
 
+def draw_banner(draw: ImageDraw.ImageDraw, xy, fill1, fill2):
+  """
+  Draw the shape of a banner. fill1 is the color of the front side of the banner, fill2 is the color of the back.
+
+  :DEPRICATED: This does not look too different from the original, so I wouldn't use it.
+  """
+  draw.rectangle(get_relative_box(xy, (0, 0, 0.2, 0.875)), fill=fill1)
+  draw.rectangle(get_relative_box(xy, (0.8, 0, 1, 0.875)), fill=fill1)
+  draw.rectangle(get_relative_box(xy, (0.1, 0.125, 0.9, 1)), fill=fill1)
+  draw.rectangle(get_relative_box(xy, (3/32, 28/32, 29/32, 31/32)), fill=fill1)
+  draw.rectangle(get_relative_box(xy, (32/160, 1/32, 33/160, 4/32)), fill=fill2)
+  draw.rectangle(get_relative_box(xy, (127/160, 1/32, 128/160, 4/32)), fill=fill2)
+  draw.rectangle(get_relative_box(xy, (16/160, 1/16, 33/160, 2/16)), fill=fill2)
+  draw.rectangle(get_relative_box(xy, (127/160, 1/16, 144/160, 2/16)), fill=fill2)
+
+  draw.ellipse(get_relative_box(xy, (15/160, 15/16, 17/160, 1)), fill=fill1)
+  draw.ellipse(get_relative_box(xy, (143/160, 15/16, 145/160, 1)), fill=fill1)
+  draw.ellipse(get_relative_box(xy, (15/160, 1/16, 17/160, 2/16)), fill=fill2)
+  draw.ellipse(get_relative_box(xy, (143/160, 1/16, 145/160, 2/16)), fill=fill2)
+  draw.ellipse(get_relative_box(xy, (31/160, 0, 33/160, 1/16)), fill=fill1)
+  draw.ellipse(get_relative_box(xy, (127/160, 0, 129/160, 1/16)), fill=fill1)
+
+
+def get_relative_box(box, relative_xy):
+  """
+  Return a new box, positioned relative to the provided box, by the corresponding x and y percentage. 
+  e.g. if box = (10, 10, 20, 20), and relative_xy = (0.2, 0.4, 0.6, 0.8), the returned box would be (12, 14, 16, 18)
+  """
+  w = box[2] - box[0]
+  h = box[3] - box[1]
+  return (box[0] + relative_xy[0] * w, box[1] + relative_xy[1] * h, box[0] + relative_xy[2] * w, box[1] + relative_xy[3] * h)
+
+
 def make_text_multiline(draw, text, font, width):
   """
   make a text into multiline so that it does not exceed the given width limit.
@@ -138,5 +187,5 @@ def make_text_multiline(draw, text, font, width):
 
 
 if __name__ == "__main__":
-  img = draw_unit_card("一个长名字", [1, 1, 100], "spade", "文本分行正常工作，但是过于长的文本会遮挡住攻击和防御数字，所以还是不能太长")
-  img.save("../img_out/test.jpg", "JPEG")
+  img = draw_unit_card("一个长名字", [1, 1, 100], "heart", "文本分行正常工作，但是过于长的文本会遮挡住攻击和防御数字，所以还是不能太长")
+  img.show()
