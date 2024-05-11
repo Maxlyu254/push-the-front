@@ -1,5 +1,6 @@
-{
-  "militia": {
+[
+  {
+    "id": "militia", 
     "type": "unit", 
     "name": "民兵", 
     "cost": 1, 
@@ -9,7 +10,8 @@
     "desc": "勇敢"
   }, 
 
-  "thief": {
+  {
+    "id": "thief", 
     "type": "unit", 
     "name": "盗贼", 
     "cost": 1, 
@@ -18,11 +20,12 @@
     "suit": "spade"
   }, 
   
-  "minimal": {
+  {
+    "id": "minimal", 
     "type": "unit", 
     "name": "简化测试", 
     "cost": 5, 
     "atk": 5, 
     "def": 5
   }
-}
+]
