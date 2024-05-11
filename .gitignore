@@ -161,3 +161,6 @@ cython_debug/
 
 # produced images
 img_out/
+
+# test json files
+json_in/test*
