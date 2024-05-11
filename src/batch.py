@@ -14,7 +14,9 @@ def draw_cards_from_json(path):
   and the resulting images is saved to the directory "root/img_out/<name_of_json>"
   """
   file_name = os.path.basename(path).split('/')[-1].rsplit('.', 1)[0]
-  os.mkdir(os.path.join(OUT_PATH, file_name))
+  out_dir_path = os.path.join(OUT_PATH, file_name)
+  if not os.path.isdir(out_dir_path):
+    os.mkdir(os.path.join(OUT_PATH, file_name))
   
   card_count = 0
   with codecs.open(path, encoding="utf-8") as file:
