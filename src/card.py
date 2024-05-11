@@ -2,8 +2,11 @@ from PIL import Image, ImageFont, ImageDraw
 
 UNIT = 36
 DIE_DICT = {1: "⚀", 2: "⚁", 3: "⚂", 4: "⚃", 5: "⚄", 6: "⚅"}
-# SUIT_DICT = {"spade": "♠", "heart": "♥", "diamond": "♦", "club": "♣", "spade0": "♤", "heart0": "♡", "diamond0": "♢", "empty_club": "♧"}
-SUIT_DICT = {"黑桃": "♠", "红桃": "♥", "方片": "♦", "梅花": "♣", "spade0": "♤", "heart0": "♡", "diamond0": "♢", "empty_club": "♧"}
+SUIT_DICT = {
+  "黑桃": "♠", "红桃": "♥", "方片": "♦", "梅花": "♣", 
+  "spade": "♠", "heart": "♥", "diamond": "♦", "club": "♣", 
+  "spade0": "♤", "heart0": "♡", "diamond0": "♢", "club0": "♧"
+}
 
 ARIAL_PATH = "./fonts/ARIAL.TTF"
 TIMES_PATH = "./fonts/TIMES.TTF"
