@@ -2,7 +2,7 @@ import json
 import os
 import codecs
 from PIL import Image
-from card import draw_unit_card, ULEN
+from card import draw_unit_card, draw_command_card, ULEN
 
 IN_PATH = "./json_in/"
 OUT_PATH = "./img_out/"
@@ -16,7 +16,7 @@ SUIT="suit"
 DESC="desc"
 
 UNIT_TYPES = {"单位", "unit"}
-COMMANDS = {"指令", "command"}
+COMMAND_TYPES = {"指令", "command"}
 
 DECK_ROW_NUM = 7
 DECK_COL_NUM = 10
@@ -53,6 +53,18 @@ def draw_cards_from_json(path):
         img = draw_unit_card(
           card[NAME], 
           (int(card[COST]), int(card[ATK]), int(card[DEF])), 
+          card[SUIT] if SUIT in card else " ", 
+          card[DESC] if DESC in card else ""
+        )
+        img.save(os.path.join(OUT_PATH, file_name + "/", card[NAME] + ".png"), "PNG")
+      
+      elif type in COMMAND_TYPES:
+        # if the card is a command
+        assert NAME in card
+        assert COST in card
+        img = draw_command_card(
+          card[NAME], 
+          (int(card[COST])), 
           card[SUIT] if SUIT in card else " ", 
           card[DESC] if DESC in card else ""
         )
@@ -108,6 +120,19 @@ def draw_tts_deck_from_json(path):
         img = draw_unit_card(
           card[NAME], 
           (int(card[COST]), int(card[ATK]), int(card[DEF])), 
+          card[SUIT] if SUIT in card else " ", 
+          card[DESC] if DESC in card else ""
+        )
+        deck_imgs[id // DECK_SIZE].paste(img, ((id % DECK_COL_NUM) * 20 * ULEN, (id // DECK_COL_NUM) * 30 * ULEN))
+      
+            
+      elif type in COMMAND_TYPES:
+        # if the card is a command
+        assert NAME in card
+        assert COST in card
+        img = draw_command_card(
+          card[NAME], 
+          (int(card[COST]), ), 
           card[SUIT] if SUIT in card else " ", 
           card[DESC] if DESC in card else ""
         )
