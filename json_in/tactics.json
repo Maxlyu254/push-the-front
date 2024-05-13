@@ -1,0 +1,115 @@
+[
+  {
+    "name": "箭雨", 
+    "cost": 2, 
+    "suit": "spade", 
+    "desc": "对敌方前线的所有单位造成1点伤害", 
+    "type": "tactic"
+  }, 
+  {
+    "name": "夜袭", 
+    "cost": 3, 
+    "suit": "spade", 
+    "desc": "对敌方前线的一个单位造成3点伤害，若击杀了敌方单位则进行一次溃退判定", 
+    "type": "tactic"
+  }, 
+  {
+    "name": "精准刺杀", 
+    "cost": 5, 
+    "suit": "spade", 
+    "desc": "消灭一个敌方单位", 
+    "type": "tactic"
+  }, 
+  {
+    "name": "水淹七军", 
+    "cost": 8, 
+    "suit": "spade", 
+    "desc": "独一无二，消灭所有不在双方基地线的单位", 
+    "type": "tactic"
+  }, 
+  {
+    "name": "额外补给", 
+    "cost": 0, 
+    "suit": "diamond", 
+    "desc": "后手玩家获得该牌\n在本回合内获得1点数", 
+    "type": "tactic"
+  }, 
+  {
+    "name": "互通有无", 
+    "cost": 1, 
+    "suit": "diamond", 
+    "desc": "从对手手中获得一张消耗牌，然后选择一张消耗牌交给对手", 
+    "type": "tactic"
+  }, 
+  {
+    "name": "高唱凯歌", 
+    "cost": 3, 
+    "suit": "diamond", 
+    "desc": "抽X张牌，X为你前线的单位数量减去敌方前线的单位数量", 
+    "type": "tactic"
+  }, 
+  {
+    "name": "给我追！", 
+    "cost": 5, 
+    "suit": "diamond", 
+    "desc": "独一无二，本回合内，你的所有单位获得追击", 
+    "type": "tactic", 
+    "id": "no_mercy"
+  }, 
+  {
+    "name": "卸甲归田", 
+    "cost": 0, 
+    "suit": "club", 
+    "desc": "选择一个单位，将其返回其所有者的手牌；如果选择的是敌方单位，则该卡牌的费用+3", 
+    "type": "tactic"
+  }, 
+  {
+    "name": "恐怖哭号", 
+    "cost": 1, 
+    "suit": "club", 
+    "desc": "在敌方前线进行一次溃退判定", 
+    "type": "tactic"
+  }, 
+  {
+    "name": "丰收时节", 
+    "cost": 2, 
+    "suit": "club", 
+    "desc": "抽2张消耗牌，你的对手抽1张消耗牌", 
+    "type": "tactic"
+  }, 
+  {
+    "name": "穷尽万策", 
+    "cost": 5, 
+    "suit": "club", 
+    "desc": "独一无二，将指令牌堆和指令弃牌堆里的所有牌加入你的手牌；回合结束时，弃掉所有指令牌", 
+    "type": "tactic"
+  }, 
+  {
+    "name": "大规模指挥", 
+    "cost": 2, 
+    "suit": "heart", 
+    "desc": "你的下一张调度指令或进攻指令可以选择至多6个单位作为目标", 
+    "type": "tactic"
+  }, 
+  {
+    "name": "贵族义务", 
+    "cost": 3, 
+    "suit": "heart", 
+    "desc": "选择一个友方非【红桃】单位，将其移回你的手牌，并免费打出一张花费不超过其两倍的【红桃】单位牌", 
+    "type": "tactic"
+  }, 
+  {
+    "name": "群体治疗", 
+    "cost": 4, 
+    "suit": "heart", 
+    "desc": "恢复所有友方单位的全部生命值", 
+    "type": "tactic"
+  }, 
+  {
+    "name": "停战协议", 
+    "cost": 4, 
+    "suit": "heart", 
+    "desc": "独一无二，直到你的下个回合开始，双方不能打出【黑桃】指令牌", 
+    "type": "tactic"
+  }
+]

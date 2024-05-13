@@ -1,0 +1,86 @@
+[
+  {
+    "name": "调度指令", 
+    "cost": 0, 
+    "suit": "diamond", 
+    "desc": "选择至多三个己方单位，使它们各前进或后退1格\n本回合无法再打出【方片】命令", 
+    "type": "command"
+  }, 
+  {
+    "name": "快速调度", 
+    "cost": 1, 
+    "suit": "diamond", 
+    "desc": "选择一个单位，使它前进或后退1格", 
+    "type": "command"
+  }, 
+  {
+    "name": "战略转进", 
+    "cost": 2, 
+    "suit": "diamond", 
+    "desc": "将任意数量的己方单位移动至己方支援线", 
+    "type": "command"
+  }, 
+  {
+    "name": "进攻指令", 
+    "cost": 0, 
+    "suit": "spade", 
+    "desc": "选择至多三个己方单位，使它们发动一次攻击\n本回合无法再打出【黑桃】命令", 
+    "type": "command"
+  }, 
+  {
+    "name": "敏捷进攻", 
+    "cost": 1, 
+    "suit": "spade", 
+    "desc": "选择一个单位，使它发动一次攻击", 
+    "type": "command"
+  }, 
+  {
+    "name": "集团进攻", 
+    "cost": 3, 
+    "suit": "spade", 
+    "desc": "选择任意数量的己方单位，使它们发动一次攻击\n本回合无法再打出【黑桃】命令", 
+    "type": "command"
+  }, 
+  {
+    "name": "急救", 
+    "cost": 0, 
+    "suit": "heart", 
+    "desc": "选择一个单位，消耗等同于其损失生命值的点数，恢复其全部生命值", 
+    "type": "command"
+  }, 
+  {
+    "name": "战地医疗", 
+    "cost": 1, 
+    "suit": "heart", 
+    "desc": "本回合中，你下一个死亡的单位改为置入你的消耗牌堆顶", 
+    "type": "command"
+  }, 
+  {
+    "name": "战场演说", 
+    "cost": 3, 
+    "suit": "heart", 
+    "desc": "直到你的下个回合开始，你前线的单位获得不溃", 
+    "type": "command"
+  }, 
+  {
+    "name": "征召", 
+    "cost": 3, 
+    "suit": "club", 
+    "desc": "抽两张消耗牌", 
+    "type": "command"
+  }, 
+  {
+    "name": "防御动员", 
+    "cost": 2, 
+    "suit": "club", 
+    "desc": "在己方基地线召唤一个1/2并具有鼓舞的民兵", 
+    "type": "command"
+  }, 
+  {
+    "name": "紧急增兵", 
+    "cost": 2, 
+    "suit": "club", 
+    "desc": "在己方前线召唤一个1/1的信鸽", 
+    "type": "command"
+  }
+]
