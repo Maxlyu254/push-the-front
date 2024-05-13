@@ -2,7 +2,7 @@ import json
 import os
 import codecs
 from PIL import Image
-from card import draw_unit_card, draw_command_card, ULEN
+from card import draw_unit_card, draw_command_card, draw_tactic_card, ULEN
 
 IN_PATH = "./json_in/"
 OUT_PATH = "./img_out/"
@@ -17,6 +17,7 @@ DESC="desc"
 
 UNIT_TYPES = {"单位", "unit"}
 COMMAND_TYPES = {"指令", "command"}
+TACTIC_TYPES = {"战术", "tactic"}
 
 DECK_ROW_NUM = 7
 DECK_COL_NUM = 10
@@ -40,40 +41,15 @@ def draw_cards_from_json(path):
 
       # set all card ids to lower case
       card = { str.lower(key) : card[key] for key in card.keys() }
+      img = draw_card_from_dict(card)
 
-      assert TYPE in card
-      type = card[TYPE]
-
-      if type in UNIT_TYPES:
-        # if the card is a unit
-        assert NAME in card
-        assert COST in card
-        assert ATK in card
-        assert DEF in card
-        img = draw_unit_card(
-          card[NAME], 
-          (int(card[COST]), int(card[ATK]), int(card[DEF])), 
-          card[SUIT] if SUIT in card else " ", 
-          card[DESC] if DESC in card else ""
-        )
-        img.save(os.path.join(OUT_PATH, file_name + "/", card[NAME] + ".png"), "PNG")
-      
-      elif type in COMMAND_TYPES:
-        # if the card is a command
-        assert NAME in card
-        assert COST in card
-        img = draw_command_card(
-          card[NAME], 
-          (int(card[COST])), 
-          card[SUIT] if SUIT in card else " ", 
-          card[DESC] if DESC in card else ""
-        )
-        img.save(os.path.join(OUT_PATH, file_name + "/", card[NAME] + ".png"), "PNG")
-
-      else:
-        # if the card is unkown type
-        print("card type unkown, batch process aborted.")
+      if img == None: 
+        # if the card type is unidentified
+        print(f"Card {card_count} type unkown, batch process aborted.")
         return card_count
+
+      else: 
+        img.save(os.path.join(OUT_PATH, file_name + "/", card[NAME] + ".png"), "PNG")
     
     # all cards processed successfully
     print(f"All cards processed successfully, saved {card_count} cards to directory {os.path.join(OUT_PATH, file_name)}")
@@ -107,45 +83,67 @@ def draw_tts_deck_from_json(path):
       # create a new deck image if the current deck images are not enough to hold all cards
       if card_count > len(deck_imgs) * DECK_SIZE:
         deck_imgs.append(Image.new(mode="RGB", size=(20*ULEN*DECK_COL_NUM, 30*ULEN*DECK_ROW_NUM), color="white"))
-
-      assert TYPE in card
-      type = card[TYPE]
-
-      if type in UNIT_TYPES: 
-        # if the card is a unit
-        assert NAME in card
-        assert COST in card
-        assert ATK in card
-        assert DEF in card
-        img = draw_unit_card(
-          card[NAME], 
-          (int(card[COST]), int(card[ATK]), int(card[DEF])), 
-          card[SUIT] if SUIT in card else " ", 
-          card[DESC] if DESC in card else ""
-        )
-        deck_imgs[id // DECK_SIZE].paste(img, ((id % DECK_COL_NUM) * 20 * ULEN, (id // DECK_COL_NUM) * 30 * ULEN))
       
-            
-      elif type in COMMAND_TYPES:
-        # if the card is a command
-        assert NAME in card
-        assert COST in card
-        img = draw_command_card(
-          card[NAME], 
-          (int(card[COST]), ), 
-          card[SUIT] if SUIT in card else " ", 
-          card[DESC] if DESC in card else ""
-        )
-        deck_imgs[id // DECK_SIZE].paste(img, ((id % DECK_COL_NUM) * 20 * ULEN, (id // DECK_COL_NUM) * 30 * ULEN))
+      img = draw_card_from_dict(card)
 
-      else:
-        # if the card is unkown type
+      if img == None: 
+        # if the card type is unidentified
         print(f"Card {card_count} type unkown, batch process aborted.")
         return card_count
+
+      else: 
+        deck_imgs[id // DECK_SIZE].paste(img, ((id % DECK_COL_NUM) * 20 * ULEN, (id // DECK_COL_NUM) * 30 * ULEN))
 
     # all cards processed successfully
     for i, img in enumerate(deck_imgs):
       img.save(os.path.join(OUT_PATH, file_name + "/", f"{file_name}({i}).png"), "PNG")
     print(f"All cards processed successfully, saved {card_count} cards to directory {os.path.join(OUT_PATH, file_name)}, in {i + 1} deck images.")
     return card_count
-  
+
+
+def draw_card_from_dict(card):
+
+  assert TYPE in card
+  card_type = card[TYPE]
+
+  if card_type in UNIT_TYPES: 
+    # if the card is a unit
+    assert NAME in card
+    assert COST in card
+    assert ATK in card
+    assert DEF in card
+    img = draw_unit_card(
+      card[NAME], 
+      (int(card[COST]), int(card[ATK]), int(card[DEF])), 
+      card[SUIT] if SUIT in card else " ", 
+      card[DESC] if DESC in card else ""
+    )
+    return img
+
+  elif card_type in COMMAND_TYPES:
+    # if the card is a command
+    assert NAME in card
+    assert COST in card
+    img = draw_command_card(
+      card[NAME], 
+      (int(card[COST]), ), 
+      card[SUIT] if SUIT in card else " ", 
+      card[DESC] if DESC in card else ""
+    )
+    return img
+
+  elif card_type in TACTIC_TYPES:
+      # if the card is a tactic
+      assert NAME in card
+      assert COST in card
+      img = draw_tactic_card(
+        card[NAME], 
+        (int(card[COST]), ), 
+        card[SUIT] if SUIT in card else " ", 
+        card[DESC] if DESC in card else ""
+      )
+      return img
+
+  else:
+    # card type unidentified
+    return None
