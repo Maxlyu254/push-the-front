@@ -28,50 +28,52 @@ DENGB1_8 = ImageFont.truetype(DENGB_PATH, size=1.8*ULEN)
 DENGB2 = ImageFont.truetype(DENGB_PATH, size=2*ULEN)
 DENGB2_5 = ImageFont.truetype(DENGB_PATH, size=2.5*ULEN)
 DENGB3 = ImageFont.truetype(DENGB_PATH, size=3*ULEN)
+SEGUISYM3 = ImageFont.truetype(SEGUISYM_PATH, size=3*ULEN)
 SEGUISYM10 = ImageFont.truetype(SEGUISYM_PATH, size=10*ULEN)
 
 BKGDBOX = (ULEN, ULEN, 19*ULEN, 28*ULEN)
-DESCBOX = (ULEN, 18*ULEN, 19*ULEN, 27*ULEN)
-COSTBOX = (ULEN, ULEN, 5*ULEN, 5*ULEN)
-ATKBOX = (ULEN, 23.8*ULEN, 5*ULEN, 27.8*ULEN)
-DEFBOX = (15*ULEN, 23.8*ULEN, 19*ULEN, 27.8*ULEN)
-NAMEBOX = (0, 26.7*ULEN, 20*ULEN, 29*ULEN)
-ICONBOX = (5*ULEN, 5*ULEN, 15*ULEN, 15*ULEN)
-DESCTEXTBOX = (1.5*ULEN, 18.5*ULEN, 18.5*ULEN, 25*ULEN)
+DESCBOX = (ULEN, 18*ULEN, 19*ULEN, 29*ULEN)
+BANNERBOX = (ULEN, 16.7*ULEN, 19*ULEN, 19.7*ULEN)
+COSTBOX = (ULEN, ULEN, 4*ULEN, 4*ULEN)
+TOPLEFTSUITBOX = (ULEN, 4*ULEN, 4*ULEN, 6*ULEN)
+ATKBOX = (ULEN, 16.7*ULEN, 5*ULEN, 20.7*ULEN)
+DEFBOX = (15*ULEN, 16.7*ULEN, 19*ULEN, 20.7*ULEN)
+NAMEBOX = BANNERBOX
+ICONBOX = (5*ULEN, 4.5*ULEN, 15*ULEN, 14.5*ULEN)
+DESCTEXTBOX = (1.5*ULEN, 20.5*ULEN, 18.5*ULEN, 28.5*ULEN)
 
-BLACK_PALETTE = {"icon": "black", "banner": "black", "name": "white", "background": "#DDDDDD"}
-RED_PALETTE = {"icon": "#CC0000", "banner": "#CC0000", "name": "white", "background": "#FFDDDD"}
+BLACK_PALETTE = {"background": "white", "foreground": "black", "name": "white", "desc_box": (0, 0, 0, 200), "desc_text": "white"}
+RED_PALETTE = {"background": "white", "foreground": "#cc0000", "name": "white", "desc_box": (0, 0, 0, 200), "desc_text": "white"}
+BLUE_PALETTE = {"background": "white", "foreground": "#002244", "name": "white", "desc_box": (0, 0, 0, 200), "desc_text": "white"}
+REVBLUE_PALETTE = {"background": "#002244", "foreground": "white", "name": "black", "desc_box": (255, 255, 255, 150), "desc_text": "black"}
+REVRED_PALETTE = {"background": "#cc0000", "foreground": "white", "name": "black", "desc_box": (255, 255, 255, 150), "desc_text": "black"}
+REVBLACK_PALETTE = {"background": "black", "foreground": "white", "name": "black", "desc_box": (255, 255, 255, 150), "desc_text": "black"}
 
 BLACK_SUITS = {"spade0", "spade", "club0", "club", "黑桃", "梅花"}
 RED_SUITS = {"heart0", "heart", "diamond0", "diamond", "红桃", "方片"}
 
-def draw_unit_card(name, stats, suit, desc, palette=None):
-  img = Image.new(mode="RGB", size=(20*ULEN, 30*ULEN), color="white")
-  draw = ImageDraw.Draw(img, "RGBA")
+def draw_unit_card(name, stats, suit, desc):
 
   # decide which palette to use
-  if palette == None and suit in BLACK_SUITS:
-    palette = BLACK_PALETTE
-  elif palette == None and suit in RED_SUITS:
+  if suit in BLACK_SUITS:
+    palette = BLUE_PALETTE
+  elif suit in RED_SUITS:
     palette = RED_PALETTE
   else: 
     palette = BLACK_PALETTE
 
-
-  # card background color
-  draw.rounded_rectangle(BKGDBOX, fill=palette["background"], radius=0.5*ULEN)
+  img = Image.new(mode="RGB", size=(20*ULEN, 30*ULEN), color=palette["background"])
+  draw = ImageDraw.Draw(img, "RGBA")
 
   # card description panel
-  draw.rectangle(DESCBOX, fill=(0, 0, 0, 200))
+  draw.rounded_rectangle(DESCBOX, fill=palette["desc_box"], radius=0.5*ULEN)
 
   # name banner
-  # draw_banner(draw, (0, 25.2*ULEN, 20*ULEN, 28.8*ULEN), palette["banner"], "#444444")
-  draw.arc((-20*ULEN, -11*ULEN, 40*ULEN, 29.2*ULEN), start=75, end=105, width=3*ULEN, fill=palette["banner"])
-  draw.rectangle((0, 25.6*ULEN, 2.75*ULEN, 28.6*ULEN), fill=palette["banner"])
-  draw.rectangle((17.25*ULEN, 25.6*ULEN, 20*ULEN, 28.6*ULEN), fill=palette["banner"])
-
-  # cost icon
-  draw.rounded_rectangle(COSTBOX, fill="#FCE53A", radius=0.5*ULEN)
+  draw.rounded_rectangle(BANNERBOX, fill=palette["foreground"], radius=0.5*ULEN)
+  # draw_banner(draw, BANNERBOX, palette["banner"], "#666666")
+  # draw.arc((-20*ULEN, -11*ULEN, 40*ULEN, 29.2*ULEN), start=75, end=105, width=3*ULEN, fill=palette["banner"])
+  # draw.rectangle((0, 25.6*ULEN, 2.75*ULEN, 28.6*ULEN), fill=palette["banner"])
+  # draw.rectangle((17.25*ULEN, 25.6*ULEN, 20*ULEN, 28.6*ULEN), fill=palette["banner"])
 
   # atk icon
   draw.rounded_rectangle(ATKBOX, fill="#E97132", radius=0.5*ULEN)
@@ -80,21 +82,105 @@ def draw_unit_card(name, stats, suit, desc, palette=None):
   draw.rounded_rectangle(DEFBOX, fill="#156082", radius=0.5*ULEN)
 
   # draw stats
-  draw_centered_text(draw, COSTBOX, text=str(stats[0]), font=ARIALB3)
+  draw_centered_text(draw, COSTBOX, text=str(stats[0]), font=ARIALB3, fill=palette["foreground"])
   draw_centered_die(draw, ATKBOX, die_num=stats[1], font_size=5*ULEN)
   draw_centered_die(draw, DEFBOX, die_num=stats[2], font_size=5*ULEN)
 
   # draw card name
   draw_centered_text(draw, NAMEBOX, text=name, font=DENGB1_8, fill=palette["name"])
 
+
+
   # draw card icon
   card_icon = SUIT_DICT[suit] if suit in SUIT_DICT else suit
-  draw_centered_text(draw, ICONBOX, text=card_icon, font=SEGUISYM10, fill=palette["icon"])
+  draw_centered_text(draw, ICONBOX, text=card_icon, font=SEGUISYM10, fill=palette["foreground"])
+
+  # draw topleft suit
+  draw_centered_text(draw, TOPLEFTSUITBOX, text=card_icon, font=SEGUISYM3, fill=palette["foreground"])
 
   # draw card description
-  draw_centered_multiline_text(draw, DESCTEXTBOX, text=desc, font=DENGB1_2, fill="white")
+  draw_centered_multiline_text(draw, DESCTEXTBOX, text=desc, font=DENGB1_2, fill=palette["desc_text"])
 
   return img
+
+
+def draw_tactic_card(name, stats, suit, desc):
+
+  # decide which palette to use
+  if  suit in BLACK_SUITS:
+    palette = BLUE_PALETTE
+  elif suit in RED_SUITS:
+    palette = RED_PALETTE
+  else: 
+    palette = BLACK_PALETTE
+
+  img = Image.new(mode="RGB", size=(20*ULEN, 30*ULEN), color=palette["background"])
+  draw = ImageDraw.Draw(img, "RGBA")
+
+  # card description panel
+  draw.rounded_rectangle(DESCBOX, fill=palette["desc_box"], radius=0.5*ULEN)
+
+  # name banner
+  draw.rounded_rectangle(BANNERBOX, fill=palette["foreground"], radius=0.5*ULEN)
+  draw.rectangle((BANNERBOX[0], (BANNERBOX[1] + BANNERBOX[3]) // 2, BANNERBOX[2], BANNERBOX[3]), fill=palette["foreground"])
+
+  # draw stats
+  draw_centered_text(draw, COSTBOX, text=str(stats[0]), font=ARIALB3, fill=palette["foreground"])
+
+  # draw card name
+  draw_centered_text(draw, NAMEBOX, text=name, font=DENGB1_8, fill=palette["name"])
+
+  # draw card icon
+  card_icon = SUIT_DICT[suit] if suit in SUIT_DICT else suit
+  draw_centered_text(draw, ICONBOX, text=card_icon, font=SEGUISYM10, fill=palette["foreground"])
+
+  # draw topleft suit
+  draw_centered_text(draw, TOPLEFTSUITBOX, text=card_icon, font=SEGUISYM3, fill=palette["foreground"])
+
+  # draw card description
+  draw_centered_multiline_text(draw, DESCTEXTBOX, text=desc, font=DENGB1_2, fill=palette["desc_text"])
+
+  return img
+
+
+def draw_command_card(name, stats, suit, desc, palette=None):
+
+  # decide which palette to use
+  if palette == None and suit in BLACK_SUITS:
+    palette = REVBLUE_PALETTE
+  elif palette == None and suit in RED_SUITS:
+    palette = REVRED_PALETTE
+  else: 
+    palette = BLACK_PALETTE
+
+  img = Image.new(mode="RGB", size=(20*ULEN, 30*ULEN), color=palette["background"])
+  draw = ImageDraw.Draw(img, "RGBA")
+
+  # card description panel
+  draw.rounded_rectangle(DESCBOX, fill=palette["desc_box"], radius=0.5*ULEN)
+
+  # name banner
+  draw.rounded_rectangle(BANNERBOX, fill=palette["foreground"], radius=0.5*ULEN)
+  draw.rectangle((BANNERBOX[0], (BANNERBOX[1] + BANNERBOX[3]) // 2, BANNERBOX[2], BANNERBOX[3]), fill=palette["foreground"])
+
+  # draw stats
+  draw_centered_text(draw, COSTBOX, text=str(stats[0]), font=ARIALB3, fill=palette["foreground"])
+
+  # draw card name
+  draw_centered_text(draw, NAMEBOX, text=name, font=DENGB1_8, fill=palette["name"])
+
+  # draw card icon
+  card_icon = SUIT_DICT[suit] if suit in SUIT_DICT else suit
+  draw_centered_text(draw, ICONBOX, text=card_icon, font=SEGUISYM10, fill=palette["foreground"])
+
+  # draw topleft suit
+  draw_centered_text(draw, TOPLEFTSUITBOX, text=card_icon, font=SEGUISYM3, fill=palette["foreground"])
+
+  # draw card description
+  draw_centered_multiline_text(draw, DESCTEXTBOX, text=desc, font=DENGB1_2, fill=palette["desc_text"])
+
+  return img
+
 
 
 def draw_centered_text(draw, xy, text, font, fill="white"):
@@ -187,5 +273,12 @@ def make_text_multiline(draw, text, font, width):
 
 
 if __name__ == "__main__":
-  img = draw_unit_card("一个长名字", [1, 1, 100], "heart", "文本分行正常工作，但是过于长的文本会遮挡住攻击和防御数字，所以还是不能太长")
+  img = draw_unit_card("黑桃", [5, 5, 6], "spade", "黑桃象征的是军人")
+  img.save("./img_out/test.png")
+  img.show()
+  img = draw_command_card("命令", [3], "club", "命令是可以复用的效果")
+  img.save("./img_out/test_command.png")
+  img.show()
+  img = draw_tactic_card("战术", [3], "club", "战术是仅能执行一次的效果")
+  img.save("./img_out/test_tactic.png")
   img.show()
