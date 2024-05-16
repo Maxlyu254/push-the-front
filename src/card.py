@@ -5,7 +5,11 @@ DIE_DICT = {1: "⚀", 2: "⚁", 3: "⚂", 4: "⚃", 5: "⚄", 6: "⚅"}
 SUIT_DICT = {
   "黑桃": "♠", "红桃": "♥", "方片": "♦", "梅花": "♣", 
   "spade": "♠", "heart": "♥", "diamond": "♦", "club": "♣", 
-  "spade0": "♤", "heart0": "♡", "diamond0": "♢", "club0": "♧"
+}
+
+HOLLOW_SUIT_DICT = {
+  "黑桃": "♤", "红桃": "♡", "方片": "♢", "梅花": "♧", 
+  "spade": "♤", "heart": "♡", "diamond": "♢", "club": "♧"
 }
 
 ARIAL_PATH = "./fonts/ARIAL.TTF"
@@ -49,8 +53,8 @@ REVBLUE_PALETTE = {"background": "#002244", "foreground": "white", "name": "blac
 REVRED_PALETTE = {"background": "#cc0000", "foreground": "white", "name": "black", "desc_box": (255, 255, 255, 150), "desc_text": "black"}
 REVBLACK_PALETTE = {"background": "black", "foreground": "white", "name": "black", "desc_box": (255, 255, 255, 150), "desc_text": "black"}
 
-BLACK_SUITS = {"spade0", "spade", "club0", "club", "黑桃", "梅花"}
-RED_SUITS = {"heart0", "heart", "diamond0", "diamond", "红桃", "方片"}
+BLACK_SUITS = {"spade", "club", "黑桃", "梅花"}
+RED_SUITS = {"heart", "diamond", "红桃", "方片"}
 
 def draw_unit_card(name, stats, suit, desc):
 
