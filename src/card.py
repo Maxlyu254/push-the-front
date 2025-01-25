@@ -33,7 +33,9 @@ DENGB2 = ImageFont.truetype(DENGB_PATH, size=2*ULEN)
 DENGB2_5 = ImageFont.truetype(DENGB_PATH, size=2.5*ULEN)
 DENGB3 = ImageFont.truetype(DENGB_PATH, size=3*ULEN)
 SEGUISYM3 = ImageFont.truetype(SEGUISYM_PATH, size=3*ULEN)
+SEGUISYM5 = ImageFont.truetype(SEGUISYM_PATH, size=5*ULEN)
 SEGUISYM10 = ImageFont.truetype(SEGUISYM_PATH, size=10*ULEN)
+SEGUISYM12 = ImageFont.truetype(SEGUISYM_PATH, size=12*ULEN)
 
 BKGDBOX = (ULEN, ULEN, 19*ULEN, 28*ULEN)
 DESCBOX = (ULEN, 18*ULEN, 19*ULEN, 29*ULEN)
@@ -94,10 +96,10 @@ def draw_unit_card(name, stats, suit, desc):
   draw_centered_text(draw, NAMEBOX, text=name, font=DENGB1_8, fill=palette["name"])
 
 
-
   # draw card icon
   card_icon = SUIT_DICT[suit] if suit in SUIT_DICT else suit
-  draw_centered_text(draw, ICONBOX, text=card_icon, font=SEGUISYM10, fill=palette["foreground"])
+  draw_centered_text(draw, ICONBOX, text=card_icon, font=SEGUISYM12, fill=palette["foreground"])
+  draw_centered_text(draw, ICONBOX, text="♞", font=SEGUISYM5, fill=palette["background"])
 
   # draw topleft suit
   draw_centered_text(draw, TOPLEFTSUITBOX, text=card_icon, font=SEGUISYM3, fill=palette["foreground"])
